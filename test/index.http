@@ -1,0 +1,53 @@
+### health-check
+GET http://localhost:3001/
+
+### angler by id
+GET http://localhost:3001/angler/sample_x
+
+### angler not found
+GET http://localhost:3001/angler/invalid
+
+### catch-all
+GET http://localhost:3001/idk
+
+### new fish
+GET http://localhost:3001/fish
+
+### catch fish
+PUT http://localhost:3001/fish
+Content-Type: application/json
+
+{
+  "fishId": "2W7Wyim2MoYjcDWVqu5O",
+  "anglerId": "sample_z"
+}
+
+### delete fish by id
+DELETE http://localhost:3001/fish
+Content-Type: application/json
+
+{
+  "id": "9GI0P39CqBOnfRLXRq9m"
+}
+
+### create new angler
+POST http://localhost:3001/angler
+Content-Type: application/json
+
+{
+  "id": "sample_z",
+  "name": "zillion",
+  "boat": "aluminum",
+  "rod": "bamboo",
+  "reel": "spinning",
+  "bait": "jerkbait"
+}
+###
+PUT http://localhost:3001/angler
+Content-Type: application/json
+
+{
+  "id": "sample_z",
+  "name": "trillion",
+  "reel": "spincast",
+}

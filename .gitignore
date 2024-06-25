@@ -1,6 +1,14 @@
+### SECURITY ###
+
+.env*
+serviceAccountKey.json
+
 ### DEVELOPER IGNORES ###
 
+data
 dist
+scripts
+
 .vscode
 
 ### FIREBASE GENERATED ###
@@ -68,8 +76,3 @@ node_modules/
 
 # Yarn Integrity file
 .yarn-integrity
-
-# dotenv environment variables file
-.env*
-
-###     ###     ###
