@@ -23,6 +23,7 @@ function getInitializedFirestore() {
 
   console.info('Firebase Admin App:', getApp().name);
   console.log('environment:', NODE_ENV);
+  console.log('port:', PORT);
 
   if (NODE_ENV === 'dev') {
     admin.firestore().settings({
@@ -31,5 +32,10 @@ function getInitializedFirestore() {
     });
   }
 
-  return getFirestore();
+  const fs = getFirestore();
+
+  console.log('database', fs.databaseId);
+  console.log(fs);
+
+  return fs;
 }
