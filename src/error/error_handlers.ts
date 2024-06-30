@@ -77,7 +77,10 @@ function onFirestoreError(res: Response, err: unknown) {
 // all type predicate functions must be logical OR-ed to the isHandled var.
 function onAnyOtherError(res: Response, err: unknown) {
   const isHandled =
-    isFishError(err) || isFirestoreError(err) || isFishValidationError(err);
+    isFishError(err) ||
+    isFirestoreError(err) ||
+    isFishValidationError(err) ||
+    res.headersSent;
 
   if (!isHandled) {
     res.statusMessage = `[any error] ${err}`;
