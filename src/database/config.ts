@@ -2,7 +2,7 @@ import 'dotenv/config';
 import admin, { ServiceAccount } from 'firebase-admin';
 import { getApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
-import https from 'https';
+import { Agent } from 'https';
 import serviceAccountCredentials from '~/serviceAccountKey.json';
 
 // environment
@@ -22,11 +22,6 @@ function getInitializedFirestore() {
     ),
   });
 
-  const agent = new https.Agent({
-    keepAlive: true,
-    rejectUnauthorized: true,
-  });
-
   console.info('Firebase Admin App:', getApp().name);
   console.log('environment:', NODE_ENV);
   console.log('port:', PORT);
@@ -39,8 +34,12 @@ function getInitializedFirestore() {
   }
 
   if (NODE_ENV === 'prod') {
-    // wtf render.com
-    app.options.httpAgent = agent;
+    // workaround for render.com ssl terminating proxy
+    app.options.httpAgent = new Agent({
+      keepAlive: true,
+      rejectUnauthorized: true,
+    });
+
     admin.firestore().settings({
       ssl: true,
     });
@@ -48,7 +47,7 @@ function getInitializedFirestore() {
 
   const fs = getFirestore();
   console.log('database', fs.databaseId);
-  console.log(fs);
+  // console.log(fs);
 
   return fs;
 }
