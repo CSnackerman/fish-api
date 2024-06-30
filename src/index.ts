@@ -1,7 +1,6 @@
 import AnglerController from '@/controller/controller.angler.js';
 import FishController from '@/controller/controller.fish.js';
 import { PORT } from '@/database/config.js';
-import { getRandomBoolWeighted } from '@/util/utils.random.js';
 import express from 'express';
 
 const app = express();
@@ -14,12 +13,17 @@ app.disable('x-powered-by');
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+  res.setTimeout(3000, () => {
+    res.statusMessage = 'timed out';
+    res.sendStatus(408);
+  });
+
+  next();
+});
+
 // routes
 app.get('/', (req, res) => {
-  for (let i = 0; i < 100; i++) {
-    console.log(getRandomBoolWeighted(0.01));
-  }
-
   res.send('Hello');
 });
 

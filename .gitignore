@@ -8,6 +8,7 @@ serviceAccountKey.json
 data
 dist
 scripts
+test_deploy.http
 
 .vscode
 
