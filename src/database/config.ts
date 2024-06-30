@@ -24,18 +24,12 @@ function getInitializedFirestore() {
   console.info('Firebase Admin App:', getApp().name);
   console.log('environment:', NODE_ENV);
 
-  admin.firestore().settings({
-    host: getHost(),
-    ssl: false,
-  });
+  if (NODE_ENV === 'dev') {
+    admin.firestore().settings({
+      host: 'localhost:8080',
+      ssl: false,
+    });
+  }
 
   return getFirestore();
-}
-
-function getHost() {
-  if (NODE_ENV === 'dev') {
-    return 'localhost:8080';
-  } else {
-    return 'idkyet.com';
-  }
 }
