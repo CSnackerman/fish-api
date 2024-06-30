@@ -30,6 +30,10 @@ function getInitializedFirestore() {
       host: 'localhost:8080',
       ssl: false,
     });
+  } else {
+    admin.firestore().settings({
+      ssl: true, // wtf render.com
+    });
   }
 
   const fs = getFirestore();
