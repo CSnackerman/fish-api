@@ -2,12 +2,28 @@ import AnglerController from '@/controller/controller.angler.js';
 import FishController from '@/controller/controller.fish.js';
 import { PORT } from '@/database/config.js';
 import express from 'express';
+import rateLimit from 'express-rate-limit';
 
 const app = express();
 
 // config
 
 app.disable('x-powered-by');
+
+app.use(
+  rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: 75,
+    standardHeaders: 'draft-7',
+    legacyHeaders: false,
+    handler: (req, res, next, options) =>
+      res
+        .status(options.statusCode)
+        .send(
+          `${options.message} Limited to ${options.limit} requests per ${options.windowMs / 1000 / 60} minutes.`
+        ),
+  })
+);
 
 // middleware
 
