@@ -16,26 +16,18 @@ export type Fish = {
 
 export const FishConverter = {
   toFirestore(fish: Fish): firestore.DocumentData {
-    const { kind, magnificent, length, gender, caughtBy, caughtAt } = fish;
-
     delete fish.id;
     deleteUndefinedFields(fish);
 
     return fish;
   },
 
-  fromFirestore(snapshot: firestore.QueryDocumentSnapshot): Fish {
-    const { kind, magnificent, length, gender, caughtBy, caughtAt } =
-      snapshot.data() as Fish;
+  fromFirestore(snapshot: firestore.QueryDocumentSnapshot<Fish, Fish>): Fish {
+    const data = snapshot.data();
 
     const fish = {
       id: snapshot.ref.id,
-      kind,
-      magnificent,
-      length,
-      gender,
-      caughtBy,
-      caughtAt,
+      ...data,
     };
     deleteUndefinedFields(fish);
 
