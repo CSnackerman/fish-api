@@ -7,7 +7,11 @@ import serviceAccountCredentials from '~/serviceAccountKey.json';
 
 // environment
 
-export const { NODE_ENV = 'dev', PORT = '3001' } = process.env;
+export const {
+  NODE_ENV = 'dev',
+  PORT = '3001',
+  TRUST_PROXY = '3',
+} = process.env;
 
 // init admin-sdk firestore
 

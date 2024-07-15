@@ -1,6 +1,6 @@
 import AnglerController from '@/controller/controller.angler.js';
 import FishController from '@/controller/controller.fish.js';
-import { PORT } from '@/database/config.js';
+import { NODE_ENV, PORT, TRUST_PROXY } from '@/database/config.js';
 import express from 'express';
 import rateLimit from 'express-rate-limit';
 
@@ -9,7 +9,7 @@ import rateLimit from 'express-rate-limit';
 const app = express();
 
 /* Config */
-
+app.set('trust proxy', +TRUST_PROXY);
 app.disable('x-powered-by');
 
 /* Middleware */
@@ -45,9 +45,14 @@ app.use((_, res, next) => {
 
 /* Routes */
 
+// health
 app.get('/', (req, res) => {
   res.send('Hello');
 });
+
+if (NODE_ENV !== 'prod') {
+  app.get('/ip', (req, res) => res.send(req.ip));
+}
 
 // angler
 app.get('/angler/:anglerId', AnglerController.getById);

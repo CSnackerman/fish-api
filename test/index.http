@@ -3,6 +3,9 @@
 ### health-check
 GET {{local}}/
 
+### Ip proxy check
+GET {{local}}/ip
+
 ### timeout
 GET {{local}}/timeout
 
