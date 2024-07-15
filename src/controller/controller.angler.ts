@@ -1,4 +1,4 @@
-import { createAsyncController } from '@/controller/controller_factory.js';
+import { asyncHandler } from '@/controller/handlers.js';
 import { db } from '@/database/config.js';
 import {
   Angler,
@@ -11,7 +11,7 @@ import {
 } from '@/database/validators/angler.request.validator.js';
 import { ApiError } from '@/error/error_handlers.js';
 
-const getById = createAsyncController<Angler>(async (req, res) => {
+const getById = asyncHandler<Angler>(async (req, res) => {
   const id = req.params.anglerId;
   const angler = await db
     .doc(`/anglers/${id}`)
@@ -32,7 +32,7 @@ const getById = createAsyncController<Angler>(async (req, res) => {
   });
 });
 
-const create = createAsyncController<string>(async (req, res) => {
+const create = asyncHandler<string>(async (req, res) => {
   const { id, name, boat, rod, reel, bait } =
     await getValidCreateAnglerRequestBody(req);
 
@@ -48,7 +48,7 @@ const create = createAsyncController<string>(async (req, res) => {
   res.sendStatus(200);
 });
 
-const update = createAsyncController<string>(async (req, res) => {
+const update = asyncHandler<string>(async (req, res) => {
   const body = await getValidUpdateAnglerRequestBody(req);
 
   const doc = getAnglerDoc(req.body.id);

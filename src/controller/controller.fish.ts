@@ -1,4 +1,4 @@
-import { createAsyncController } from '@/controller/controller_factory.js';
+import { asyncHandler } from '@/controller/handlers.js';
 import { fishCollection } from '@/database/collections/collection.index.js';
 import { Angler } from '@/database/converter/converter.angler.js';
 import { Fish, FishConverter } from '@/database/converter/converter.fish.js';
@@ -10,7 +10,7 @@ import {
 import { ApiError } from '@/error/error_handlers.js';
 import { Timestamp } from 'firebase-admin/firestore';
 
-const spawn = createAsyncController<Fish>(async (req, res) => {
+const spawn = asyncHandler<Fish>(async (req, res) => {
   const fishData = getRandomizedNewFish();
 
   const fishDocRef = await fishCollection
@@ -24,7 +24,7 @@ const spawn = createAsyncController<Fish>(async (req, res) => {
   });
 });
 
-const caught = createAsyncController<void>(async (req, res) => {
+const caught = asyncHandler<void>(async (req, res) => {
   if (!req.body.fishId) {
     throw new ApiError(400, 'missing fish id');
   }
@@ -66,7 +66,7 @@ const caught = createAsyncController<void>(async (req, res) => {
   res.sendStatus(200);
 });
 
-const incinerate = createAsyncController<void>(async (req, res) => {
+const incinerate = asyncHandler<void>(async (req, res) => {
   const id = req.body.id;
   if (!id) {
     throw new ApiError(400, 'missing id');

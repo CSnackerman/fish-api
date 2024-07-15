@@ -4,12 +4,20 @@ import { PORT } from '@/database/config.js';
 import express from 'express';
 import rateLimit from 'express-rate-limit';
 
+/* Init */
+
 const app = express();
 
-// config
+/* Config */
 
 app.disable('x-powered-by');
 
+/* Middleware */
+
+// json
+app.use(express.json());
+
+// limiter
 app.use(
   rateLimit({
     windowMs: 15 * 60 * 1000,
@@ -25,20 +33,18 @@ app.use(
   })
 );
 
-// middleware
-
-app.use(express.json());
-
-app.use((req, res, next) => {
-  res.setTimeout(3000, () => {
-    res.statusMessage = 'timed out';
+// request timeout
+app.use((_, res, next) => {
+  res.setTimeout(5000, () => {
+    res.statusMessage = 'took too long. >5s';
     res.sendStatus(408);
   });
 
   next();
 });
 
-// routes
+/* Routes */
+
 app.get('/', (req, res) => {
   res.send('Hello');
 });
