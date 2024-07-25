@@ -23,11 +23,9 @@ export const FishConverter = {
   },
 
   fromFirestore(snapshot: firestore.QueryDocumentSnapshot<Fish, Fish>): Fish {
-    const data = snapshot.data();
-
     const fish = {
       id: snapshot.ref.id,
-      ...data,
+      ...snapshot.data(),
     };
     deleteUndefinedFields(fish);
 

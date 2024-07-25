@@ -28,11 +28,25 @@ export function getRandomizedNewFish(): Fish {
   const kind = getRandomElement(validKindOfFish);
   const magnificent = getRandomBoolWeighted(0.01);
   const gender = getRandomBool();
-  const length = getRandomFishLength(0.3, 33);
+  const length = getRandomFishLength(
+    getFishLengthByKind(kind).min,
+    getFishLengthByKind(kind).max
+  );
   return {
     kind,
     magnificent,
     gender,
     length,
   };
+}
+
+function getFishLengthByKind(kind: KindOfFish) {
+  // prettier-ignore
+  switch (kind) {
+    case 'bass':      return {min: 0.30, max: 1.03};
+    case 'shrimp':    return {min: 0.02, max: 0.20};
+    case 'minnow':    return {min: 0.01, max: 0.05};
+    case 'swordfish': return {min: 1.20, max: 1.90};
+    case 'whale':     return {min: 3.00, max: 33.5};
+  }
 }

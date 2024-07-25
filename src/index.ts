@@ -9,12 +9,13 @@ import rateLimit from 'express-rate-limit';
 const app = express();
 
 /* Config */
+
 app.set('trust proxy', +TRUST_PROXY);
 app.disable('x-powered-by');
 
 /* Middleware */
 
-// json
+// json parser
 app.use(express.json());
 
 // limiter
